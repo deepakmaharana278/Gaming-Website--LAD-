@@ -3,8 +3,9 @@ import Layout from "../components/Layout";
 import { User, Mail, Lock } from "lucide-react";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase";
-import { useNavigate } from "react-router-dom";
+import { useNavigate,Link } from "react-router-dom";
 import { googleLogin } from "../utils/googleLogin";
+
 
 const Register = () => {
   const navigate = useNavigate();
@@ -199,11 +200,11 @@ const Register = () => {
           
 
           {/* Sign In Link */}
-          <p className="text-center text-sm text-neutral-400">
+          <p className=" mt-3 text-center text-sm text-neutral-400">
             Already have an account?{" "}
-            <a href="/signin" className="text-blue-400 hover:text-blue-500">
+            <Link to="/login" className="text-blue-400 hover:text-blue-500">
               Sign in
-            </a>
+            </Link>
           </p>
         </div>
       </div>

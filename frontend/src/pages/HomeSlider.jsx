@@ -16,12 +16,12 @@ const HomeSlider = () => {
         modules={[Autoplay, Pagination]}
         slidesPerView={1}
         autoplay={{
-          delay: 3000,
+          delay: 10000,
           disableOnInteraction: false,
         }}
         pagination={{ clickable: true }}
         loop={true}
-        className="h-[220px] sm:h-[300px] md:h-[800px]"
+        className="h-55 sm:h-75 md:h-200"
       >
         {/* Slide 1 */}
         <SwiperSlide>
@@ -46,7 +46,7 @@ const HomeSlider = () => {
                 <h2
                   className="
                     text-lg sm:text-xl md:text-4xl
-                    font-bold
+                    font-bold 
                     leading-snug
                   "
                 >

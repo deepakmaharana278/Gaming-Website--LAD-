@@ -97,7 +97,7 @@ const Navbar = () => {
 
               {/* Username + Profile Pic (RIGHTMOST) */}
               <div className="flex items-center gap-2 bg-[#344C64] px-3 py-1.5 rounded-full">
-                <span className="hidden sm:block text-xs font-medium truncate max-w-[120px]">
+                <span className="hidden sm:block text-xs font-medium truncate max-w-30">
                   {user.displayName || "Player"}
                 </span>
                 <img
@@ -136,27 +136,16 @@ const Navbar = () => {
             All Games
           </Link>
 
-          {!user ? (
-            <>
-              <Link to="/login" onClick={() => setOpen(false)}>
-                Login
-              </Link>
-              <Link
-                to="/signup"
-                onClick={() => setOpen(false)}
-                className="block bg-[#57A6A1] text-[#240750] px-3 py-2 rounded-md font-semibold text-center"
-              >
-                Signup
-              </Link>
-            </>
-          ) : (
-            <button
-              onClick={handleLogout}
-              className="w-full bg-red-500 hover:bg-red-600 text-white px-3 py-2 rounded-md font-semibold"
-            >
-              Logout
+          <div className="relative w-56">
+            <input
+              type="search"
+              placeholder="Search games..."
+              className="w-full px-3 py-2 rounded-md bg-[#344C64] border border-[#577B8D]"
+            />
+            <button className="absolute right-1 top-1/2 -translate-y-1/2 bg-[#57A6A1] text-[#240750] px-3 py-1 rounded-md font-semibold">
+              Go
             </button>
-          )}
+          </div>
         </div>
       )}
     </nav>

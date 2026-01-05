@@ -3,8 +3,9 @@ import Layout from "../components/Layout";
 import { Mail, Lock } from "lucide-react";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { googleLogin } from "../utils/googleLogin";
+
 
 const Login = () => {
   const navigate = useNavigate();
@@ -32,12 +33,11 @@ const Login = () => {
   return (
     <Layout>
       <div
-        className="min-h-screen flex items-center justify-center px-4 
-                   bg-linear-to-br from-[#240750] via-[#4a044e] to-[#240750]"
+        className="min-h-screen flex items-center justify-center px-4 bg-linear-to-br from-[#240750] via-[#4a044e] to-[#240750]"
       >
         <div
           className="w-full max-w-md bg-neutral-900/80 backdrop-blur-lg 
-                     border border-neutral-800 rounded-xl shadow-lg p-8"
+          border border-neutral-800 rounded-xl shadow-lg p-8"
         >
           {/* Title */}
           <h2 className="text-2xl font-semibold text-center text-white">
@@ -67,9 +67,9 @@ const Login = () => {
                 onChange={(e) => setEmail(e.target.value)}
                 required
                 className="w-full pl-10 pr-4 py-2 rounded-md 
-                           bg-neutral-950 border border-neutral-700 
-                           text-neutral-200 placeholder-neutral-500
-                           focus:outline-none focus:border-blue-500"
+                bg-neutral-950 border border-neutral-700 
+                text-neutral-200 placeholder-neutral-500
+                focus:outline-none focus:border-blue-500"
               />
             </div>
 
@@ -86,9 +86,9 @@ const Login = () => {
                 onChange={(e) => setPassword(e.target.value)}
                 required
                 className="w-full pl-10 pr-4 py-2 rounded-md 
-                           bg-neutral-950 border border-neutral-700 
-                           text-neutral-200 placeholder-neutral-500
-                           focus:outline-none focus:border-blue-500"
+                bg-neutral-950 border border-neutral-700 
+                text-neutral-200 placeholder-neutral-500
+                focus:outline-none focus:border-blue-500"
               />
             </div>
 
@@ -108,9 +108,9 @@ const Login = () => {
               type="submit"
               disabled={loading}
               className="w-full py-2 rounded-md font-medium text-white
-                         bg-linear-to-r from-blue-500 to-blue-700
-                         hover:from-blue-600 hover:to-blue-800
-                         transition disabled:opacity-60"
+              bg-linear-to-r from-blue-500 to-blue-700
+              hover:from-blue-600 hover:to-blue-800
+              transition disabled:opacity-60"
             >
               {loading ? "Signing In..." : "Sign In"}
             </button>
@@ -139,11 +139,11 @@ const Login = () => {
           </button>
 
           {/* Signup */}
-          <p className="text-center text-sm text-neutral-400">
+          <p className="mt-3 text-center text-sm text-neutral-400">
             Don’t have an account?{" "}
-            <a href="/signup" className="text-blue-400 hover:text-blue-500">
+            <Link to="/signup" className="text-blue-400 hover:text-blue-500">
               Create one
-            </a>
+            </Link>
           </p>
         </div>
       </div>
