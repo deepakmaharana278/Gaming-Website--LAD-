@@ -1,54 +1,94 @@
-import React from "react";
+import React, { useState } from "react";
 import Layout from "../components/Layout";
 import { Mail, Lock } from "lucide-react";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../firebase";
+import { useNavigate } from "react-router-dom";
+import { googleLogin } from "../utils/googleLogin";
 
 const Login = () => {
+  const navigate = useNavigate();
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    setError("");
+
+    try {
+      setLoading(true);
+      await signInWithEmailAndPassword(auth, email, password);
+      navigate("/"); // redirect after login
+    } catch (err) {
+      setError("Invalid email or password");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <Layout>
       <div
-        className="min-h-screen flex items-center justify-center px-4 bg-gradient-to-br from-[#240750] via-[#4a044e] to-[#240750]"
+        className="min-h-screen flex items-center justify-center px-4 
+                   bg-linear-to-br from-[#240750] via-[#4a044e] to-[#240750]"
       >
         <div
           className="w-full max-w-md bg-neutral-900/80 backdrop-blur-lg 
-                      border border-neutral-800 rounded-xl shadow-lg p-8"
+                     border border-neutral-800 rounded-xl shadow-lg p-8"
         >
           {/* Title */}
-          <h2 className="text-2xl font-semibold text-center text-white">Welcome Back 🎮</h2>
-          <p className="text-center text-neutral-400 text-sm mt-2">Sign in to continue playing</p>
+          <h2 className="text-2xl font-semibold text-center text-white">
+            Welcome Back 🎮
+          </h2>
+          <p className="text-center text-neutral-400 text-sm mt-2">
+            Sign in to continue playing
+          </p>
+
+          {/* Error */}
+          {error && (
+            <p className="text-red-400 text-sm text-center mt-4">{error}</p>
+          )}
 
           {/* Form */}
-          <form className="mt-6 space-y-4">
+          <form onSubmit={handleLogin} className="mt-6 space-y-4">
             {/* Email */}
             <div className="relative">
               <Mail
-                className="absolute left-3 top-1/2 -translate-y-1/2 
-                             text-neutral-400"
+                className="absolute left-3 top-1/2 -translate-y-1/2 text-neutral-400"
                 size={18}
               />
               <input
                 type="email"
                 placeholder="Email address"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
                 className="w-full pl-10 pr-4 py-2 rounded-md 
-                         bg-neutral-950 border border-neutral-700 
-                         text-neutral-200 placeholder-neutral-500
-                         focus:outline-none focus:border-blue-500"
+                           bg-neutral-950 border border-neutral-700 
+                           text-neutral-200 placeholder-neutral-500
+                           focus:outline-none focus:border-blue-500"
               />
             </div>
 
             {/* Password */}
             <div className="relative">
               <Lock
-                className="absolute left-3 top-1/2 -translate-y-1/2 
-                             text-neutral-400"
+                className="absolute left-3 top-1/2 -translate-y-1/2 text-neutral-400"
                 size={18}
               />
               <input
                 type="password"
                 placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
                 className="w-full pl-10 pr-4 py-2 rounded-md 
-                         bg-neutral-950 border border-neutral-700 
-                         text-neutral-200 placeholder-neutral-500
-                         focus:outline-none focus:border-blue-500"
+                           bg-neutral-950 border border-neutral-700 
+                           text-neutral-200 placeholder-neutral-500
+                           focus:outline-none focus:border-blue-500"
               />
             </div>
 
@@ -66,12 +106,13 @@ const Login = () => {
             {/* Button */}
             <button
               type="submit"
+              disabled={loading}
               className="w-full py-2 rounded-md font-medium text-white
-                       bg-linear-to-r from-blue-500 to-blue-700
-                       hover:from-blue-600 hover:to-blue-800
-                       transition"
+                         bg-linear-to-r from-blue-500 to-blue-700
+                         hover:from-blue-600 hover:to-blue-800
+                         transition disabled:opacity-60"
             >
-              Sign In
+              {loading ? "Signing In..." : "Sign In"}
             </button>
           </form>
 
@@ -81,6 +122,21 @@ const Login = () => {
             <span className="px-3 text-neutral-500 text-sm">OR</span>
             <div className="flex-1 h-px bg-neutral-700" />
           </div>
+
+          {/* Google Login */}
+          <button
+            type="button"
+            onClick={() => googleLogin(navigate, setError)}
+            className="w-full flex items-center justify-center gap-2 py-2 rounded-md
+             bg-white text-black font-medium hover:bg-gray-400 transition"
+          >
+            <img
+              src="https://www.svgrepo.com/show/475656/google-color.svg"
+              alt="Google"
+              className="h-5 w-5"
+            />
+            Continue with Google
+          </button>
 
           {/* Signup */}
           <p className="text-center text-sm text-neutral-400">
