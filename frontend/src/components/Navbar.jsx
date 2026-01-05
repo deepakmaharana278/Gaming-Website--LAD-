@@ -1,15 +1,36 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { onAuthStateChanged, signOut } from "firebase/auth";
+import { auth } from "../firebase";
 import logo from "../assets/logo.svg";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
+  const [user, setUser] = useState(null);
+  const navigate = useNavigate();
+
+  // Listen to auth state
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+    });
+    return () => unsubscribe();
+  }, []);
+
+  const handleLogout = async () => {
+    await signOut(auth);
+    setOpen(false);
+    navigate("/login");
+  };
 
   return (
     <nav className="bg-[#240750] text-white px-4 py-4">
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         {/* Logo */}
-        <Link to="/" className="flex items-center gap-2 text-2xl font-bold tracking-wide text-[#57A6A1]">
+        <Link
+          to="/"
+          className="flex items-center gap-2 text-2xl font-bold tracking-wide text-[#57A6A1]"
+        >
           <img src={logo} alt="LAD Logo" className="h-9 w-9 object-contain" />
           <span>LAD</span>
         </Link>
@@ -35,22 +56,45 @@ const Navbar = () => {
           </select>
 
           <div className="relative w-56">
-            <input type="search" placeholder="Search games..." className="w-full px-3 py-2 rounded-md bg-[#344C64] border border-[#577B8D]" />
-            <button className="absolute right-1 top-1/2 -translate-y-1/2 bg-[#57A6A1] text-[#240750] px-3 py-1 rounded-md font-semibold">Go</button>
+            <input
+              type="search"
+              placeholder="Search games..."
+              className="w-full px-3 py-2 rounded-md bg-[#344C64] border border-[#577B8D]"
+            />
+            <button className="absolute right-1 top-1/2 -translate-y-1/2 bg-[#57A6A1] text-[#240750] px-3 py-1 rounded-md font-semibold">
+              Go
+            </button>
           </div>
         </div>
 
         {/* Auth + Mobile Button */}
         <div className="flex items-center gap-3 text-sm">
-          <Link to="/login" className="hover:text-[#57A6A1]">
-            Login
-          </Link>
-          <Link to="/signup" className="bg-[#57A6A1] text-[#240750] px-3 py-1.5 rounded-md font-semibold">
-            Signup
-          </Link>
+          {!user ? (
+            <>
+              <Link to="/login" className="hover:text-[#57A6A1]">
+                Login
+              </Link>
+              <Link
+                to="/signup"
+                className="bg-[#57A6A1] text-[#240750] px-3 py-1.5 rounded-md font-semibold"
+              >
+                Signup
+              </Link>
+            </>
+          ) : (
+            <button
+              onClick={handleLogout}
+              className="bg-red-500 hover:bg-red-600 text-white px-3 py-1.5 rounded-md font-semibold"
+            >
+              Logout
+            </button>
+          )}
 
           {/* Mobile Menu Button */}
-          <button className="md:hidden text-2xl ml-2" onClick={() => setOpen(!open)}>
+          <button
+            className="md:hidden text-2xl ml-2"
+            onClick={() => setOpen(!open)}
+          >
             <i className={`fas ${open ? "fa-xmark" : "fa-bars"}`}></i>
           </button>
         </div>
@@ -65,7 +109,11 @@ const Navbar = () => {
           <Link to="/trending" className="block" onClick={() => setOpen(false)}>
             Trending
           </Link>
-          <Link to="/all-games" className="block" onClick={() => setOpen(false)}>
+          <Link
+            to="/all-games"
+            className="block"
+            onClick={() => setOpen(false)}
+          >
             All Games
           </Link>
 
@@ -78,9 +126,41 @@ const Navbar = () => {
           </select>
 
           <div className="relative">
-            <input type="search" placeholder="Search games..." className="w-full px-3 py-2 rounded-md bg-[#344C64] border border-[#577B8D]" />
-            <button className="absolute right-1 top-1/2 -translate-y-1/2 bg-[#57A6A1] text-[#240750] px-3 py-1 rounded-md font-semibold">Go</button>
+            <input
+              type="search"
+              placeholder="Search games..."
+              className="w-full px-3 py-2 rounded-md bg-[#344C64] border border-[#577B8D]"
+            />
+            <button className="absolute right-1 top-1/2 -translate-y-1/2 bg-[#57A6A1] text-[#240750] px-3 py-1 rounded-md font-semibold">
+              Go
+            </button>
           </div>
+
+          {!user ? (
+            <>
+              <Link
+                to="/login"
+                className="block"
+                onClick={() => setOpen(false)}
+              >
+                Login
+              </Link>
+              <Link
+                to="/signup"
+                className="block bg-[#57A6A1] text-[#240750] px-3 py-2 rounded-md font-semibold text-center"
+                onClick={() => setOpen(false)}
+              >
+                Signup
+              </Link>
+            </>
+          ) : (
+            <button
+              onClick={handleLogout}
+              className="w-full bg-red-500 hover:bg-red-600 text-white px-3 py-2 rounded-md font-semibold"
+            >
+              Logout
+            </button>
+          )}
         </div>
       )}
     </nav>
