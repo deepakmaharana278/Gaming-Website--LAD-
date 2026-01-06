@@ -27,7 +27,7 @@ const Contact = () => {
               </div>
 
               <div className="flex items-center gap-4 bg-white/5 p-4 rounded-lg backdrop-blur">
-                <span className="text-xl"><i class="fa-solid fa-earth-americas"></i></span>
+                <span className="text-xl"><i className="fa-solid fa-earth-americas"></i></span>
                 <span className="text-sm text-gray-200">
                   Available Worldwide
                 </span>
@@ -43,7 +43,7 @@ const Contact = () => {
           </div>
 
           <div
-            className="bg-white/10  backdrop-blur-xl border  border-white/20  rounded-2xl p-6 sm:p-8  shadow-xl"
+            className="bg-white/10  backdrop-blur-xl border border-white/20  rounded-2xl p-6 sm:p-8 shadow-xl"
           >
             <h2 className="text-xl text-center text-[#bccecd] font-semibold mb-6">
               Send us a message
@@ -55,7 +55,7 @@ const Contact = () => {
                 <label className="text-sm text-gray-300">Your Name</label>
                 <input
                   type="text"
-                  placeholder="Deepak Maharana"
+                  placeholder="John snow"
                   className="mt-1 w-full px-4 py-2.5 rounded-lg bg-[#344C64]/70 border border-[#577B8D] focus:outline-none focus:ring-2 focus:ring-[#57A6A1]
                     text-white"
                 />
@@ -65,7 +65,7 @@ const Contact = () => {
                 <label className="text-sm text-gray-300">Email Address</label>
                 <input
                   type="email"
-                  placeholder="deepak@email.com"
+                  placeholder="John@email.com"
                   className="mt-1 w-full px-4 py-2.5 rounded-lg bg-[#344C64]/70 border border-[#577B8D] focus:outline-none focus:ring-2 focus:ring-[#57A6A1]
                     text-white"
                 />
