@@ -17,3 +17,16 @@ def register(req):
     User.objects.create(user_name=user_name,email=email,password=make_password(password))
     return Response({"message":"User Registered Successfully"},status=201)
 
+@api_view(['POST'])
+def login(req):
+    email = req.data.get('email')
+    password = req.data.get('password')
+
+    try:
+        user = User.objects.get(email=email)
+        if check_password(password,user.password):
+            return Response({"message":"Login Successfully"},status=200)
+        else:
+            return Response({"message":"Invalid Creadential"},status=401)
+    except:
+        return Response({"message":"User not found"},status=404)
