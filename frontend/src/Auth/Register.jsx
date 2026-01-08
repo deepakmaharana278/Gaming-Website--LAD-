@@ -35,10 +35,7 @@ const Register = () => {
       setLoading(true);
       await createUserWithEmailAndPassword(auth, email, password);
 
-      // 🔹 Later you can store username in Firestore
-      // console.log("Username:", username);
-
-      navigate("/"); // redirect after signup
+      navigate("/"); 
     } catch (err) {
       setError(err.message);
     } finally {

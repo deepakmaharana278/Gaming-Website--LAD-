@@ -1,11 +1,14 @@
 from django.db import models
 
 
-class User(models.Model):
-    user_name = models.CharField(max_length=50)
-    email = models.EmailField(max_length=50)
-    password = models.CharField(max_length=50)
-    reg_date = models.DateTimeField(auto_now_add=True)
+class Game(models.Model):
+    name = models.CharField(max_length=300)
+    slug = models.SlugField(unique=True)
+    description = models.TextField(blank=True)
+    category = models.CharField(max_length=100)
+    thumbnail = models.URLField()
+    url = models.URLField()
+    source = models.CharField(max_length=50, default="GameMonetize")
 
     def __str__(self):
-        return f"{self.user_name}"
+        return self.name

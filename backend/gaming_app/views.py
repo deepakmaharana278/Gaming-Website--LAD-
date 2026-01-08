@@ -15,7 +15,7 @@ def register(req):
     if User.objects.filter(email=email).exists():
         return Response({"message":"Email already registered"},status=400)
     User.objects.create(user_name=user_name,email=email,password=make_password(password))
-    return Response({"message":"User Registered Successfully"},status=201)
+    return Response({"message":"Account created successfully"},status=201)
 
 @api_view(['POST'])
 def login(req):
