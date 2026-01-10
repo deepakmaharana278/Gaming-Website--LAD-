@@ -1,6 +1,6 @@
 from django.urls import path
+from .views import gamemonetize_games
 
 urlpatterns = [
-    path('register/',),
-    path('login/',),
+    path("games/", gamemonetize_games),
 ]
